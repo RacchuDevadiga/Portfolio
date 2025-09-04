@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rashmitha Devadiga | BCA Graduate & Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        .cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-default {
+            background: rgba(255, 153, 0, 0.7);
+            border: 2px solid #ff9900;
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+        }
+
+        .cursor-hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            background: rgba(255, 102, 0, 0.8);
+            border: 2px solid #ff6600;
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.7);
+        }
+
+        .cursor-click {
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        .cursor-hidden {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        /* Naruto Symbol */
+        .cursor-symbol {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        :root {
+            --primary: #ff7700;
+            --dark-blue: #1a2b40;
+            --accent-red: #e60000;
+            --light-beige: #f5e8c8;
+            --text-dark: #333;
+            --accent-yellow: #ffde00;
+            --accent-green: #00aa00;
+            --light-gray: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Chakra Petch', sans-serif;
+            background: linear-gradient(to bottom, #1a2b40, #0d1520);
+            color: white;
+            line-height: 1.6;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(26, 43, 64, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            color: var(--primary);
+            text-shadow: 0 0 5px rgba(255, 119, 0, 0.5);
+        }
+
+        .logo i {
+            margin-right: 8px;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .hero-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            margin: 0 auto 25px;
+            overflow: hidden;
+            background: linear-gradient(45deg, #1a2b40, #0d1520);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: var(--primary);
+            position: relative;
+        }
+
+        /* Floating particles for background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: var(--primary);
+            position: relative;
+        }
+
+        section h2:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image i {
+            font-size: 100px;
+            color: var(--primary);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .skill-category h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-category h3 i {
+            margin-right: 8px;
+        }
+
+        .skill-item {
+            margin-bottom: 12px;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            width: 0;
+        }
+
+        /* Education Section */
+        .education-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .education-timeline:before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            height: 100%;
+            width: 3px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+            width: 100%;
+            padding-left: 50px;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 18px;
+            border-radius: 8px;
+            width: 100%;
+            border-left: 4px solid var(--primary);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .timeline-content p {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .timeline-content i {
+            margin-right: 8px;
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        /* Project Section */
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary);
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .project-card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        /* Additional Info Section */
+        .cards-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-card h3 i {
+            margin-right: 8px;
+        }
+
+        .info-card ul {
+            list-style-type: none;
+        }
+
+        .info-card li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            font-size: 14px;
+        }
+
+        .info-card li:before {
+            content: '•';
+            color: var(--primary);
+            font-size: 16px;
+            position: absolute;
+            left: 0;
+            top: -1px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(13, 21, 32, 0.9);
+            padding: 25px 0;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-info {
+            margin-bottom: 15px;
+        }
+
+        .contact-info h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Scroll Text */
+        .scroll-text {
+            background: var(--light-beige);
+            color: var(--text-dark);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border: 2px solid #8b5a2b;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--primary);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: white;
+            font-family: 'Chakra Petch', sans-serif;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Animated Background Elements */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            border: 1px solid var(--primary);
+        }
+
+        /* Text animation classes */
+        .animated-text {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 576px) {
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .hero h2 {
+                font-size: 36px;
+            }
+
+            .hero-img {
+                width: 180px;
+                height: 180px;
+                font-size: 70px;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .about-content {
+                flex-direction: row;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .education-timeline:before {
+                left: 50%;
+            }
+
+            .timeline-item {
+                padding-left: 0;
+            }
+
+            .timeline-item:nth-child(odd) {
+                justify-content: flex-start;
+                padding-right: 50%;
+            }
+
+            .timeline-item:nth-child(even) {
+                justify-content: flex-end;
+                padding-left: 50%;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .hero {
+                padding: 150px 0 100px;
+            }
+
+            .hero h2 {
+                font-size: 48px;
+            }
+
+            .hero-img {
+                width: 200px;
+                height: 200px;
+                font-size: 80px;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .skills-container {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .cards-container {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        /* Mobile menu active state */
+        .nav-active {
+            transform: translateX(0%) !important;
+        }
+
+        /* Animation for menu toggle */
+        .toggle .line1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .toggle .line2 {
+            opacity: 0;
+        }
+
+        .toggle .line3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Advanced Cursor System -->
+    <div class="cursor cursor-default">
+        <div class="cursor-symbol">忍</div>
+    </div>
+    
+    <!-- Animated Background Elements -->
+    <div class="floating-shapes"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <h1>Rashmitha Devadiga</h1>
+                </div>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="line1"></span>
+                    <span class="line2"></span>
+                    <span class="line3"></span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#project">Projects</a></li>
+                    <li><a href="#additional">More</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="particles" id="particles"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-img">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h2 id="hero-title">Rashmitha Devadiga</h2>
+                <p id="hero-subtitle">BCA Graduate & Software Developer</p>
+                <div class="scroll-text" id="hero-scroll-text">
+                    <p>// PROFILE: BCA GRADUATE</p>
+                    <p>// SPECIALTY: PROGRAMMING & WEB DEVELOPMENT</p>
+                    <p>// LOCATION: UDUPI, KARNATAKA</p>
+                    <p>// ACADEMIC PERFORMANCE: 9.2 CGPA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="animated-text">About Me</h2>
+            <div class="about-content">
+                <div class="about-text animated-text">
+                    <p>A motivated BCA student with a strong foundation in programming and web development, seeking
+                        opportunities to enhance my technical skills and contribute to meaningful projects. Passionate
+                        about learning and eager to grow in a professional environment.</p>
+                    <p>I bring not only technical expertise but also strong soft skills including communication,
+                        teamwork, and adaptability to any team or project.</p>
+                </div>
+                <div class="about-image animated-text">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="animated-text">My Skills</h2>
+            <div class="skills-container">
+                <div class="skill-category animated-text">
+                    <h3><i class="fas fa-laptop-code"></i> Programming Skills</h3>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>C</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>C++</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-width="80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Python</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-width="75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>SQL</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-width="80%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category animated-text">
+                    <h3><i class="fas fa-code"></i> Web Development</h3>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>HTML</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>CSS</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-width="85%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category animated-text">
+                    <h3><i class="fas fa-file-alt"></i> Office Tools</h3>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>MS Word</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>MS PowerPoint</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-width="85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <div class="container">
+            <h2 class="animated-text">Education</h2>
+            <div class="education-timeline">
+                <div class="timeline-item animated-text">
+                    <div class="timeline-content">
+                        <h3>Bachelor of Computer Applications (BCA)</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Dr. G. Shankar Government Women's College, Ajjarakadu,
+                            Udupi</p>
+                        <p><i class="fas fa-calendar-alt"></i> 2022 - 2025</p>
+                        <p><i class="fas fa-star"></i> CGPA: 9.2</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item animated-text">
+                    <div class="timeline-content">
+                        <h3>Pre-University Course (PUC)</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Vivek PU College, Kota, Udupi Taluk and District,
+                            576221</p>
+                        <p><i class="fas fa-calendar-alt"></i> 2020 - 2022</p>
+                        <p><i class="fas fa-star"></i> Score: 95.33%</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item animated-text">
+                    <div class="timeline-content">
+                        <h3>SSLC (10th Grade)</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Government Junior College, Shankaranarayana, Kundapura
+                            Taluk, Udupi District, 576221</p>
+                        <p><i class="fas fa-calendar-alt"></i> 2019 - 2020</p>
+                        <p><i class="fas fa-star"></i> Score: 82.08%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Section -->
+    <section id="project">
+        <div class="container">
+            <h2 class="animated-text">Projects</h2>
+            <div class="project-card animated-text">
+                <h3>Shopping Recommendation System</h3>
+                <p>A smart system that recommends products to users based on their preferences and browsing history.
+                    Built using Python and machine learning algorithms.</p>
+                <p><strong>Technologies used:</strong> HTML,CSS,JAVA SCRIPT,PHP </p>
+                <div class="scroll-text">
+                    <p>// PROJECT STATUS: COMPLETED</p>
+                    <p>// COMPLEXITY: INTERMEDIATE</p>
+                    <p>// TECHNOLOGIES: HTML,CSS,JAVA SCRIPT,PHP</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Info Section -->
+    <section id="additional">
+        <div class="container">
+            <h2 class="animated-text">More About Me</h2>
+            <div class="cards-container">
+                <div class="info-card animated-text">
+                    <h3><i class="fas fa-certificate"></i> Certification</h3>
+                    <p>Completion of "Employability skills Training program" conducted by Mahindra Pride Classroom,
+                        Naandi Foundation (2024)</p>
+                </div>
+
+                <div class="info-card animated-text">
+                    <h3><i class="fas fa-language"></i> Languages</h3>
+                    <ul>
+                        <li>Kannada</li>
+                        <li>English</li>
+                    </ul>
+                </div>
+
+                <div class="info-card animated-text">
+                    <h3><i class="fas fa-heart"></i> Hobbies</h3>
+                    <ul>
+                        <li>Reading books</li>
+                        <li>Dancing</li>
+                        <li>Drawing</li>
+                        <li>Creating artwork</li>
+                    </ul>
+                </div>
+
+                <div class="info-card animated-text">
+                    <h3><i class="fas fa-users"></i> Soft Skills</h3>
+                    <ul>
+                        <li>Strong verbal and written communication</li>
+                        <li>Teamwork and collaboration</li>
+                        <li>Time management</li>
+                        <li>Adaptability</li>
+                        <li>Leadership</li>
+                        <li>Computer proficiency</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-info">
+                    <h3>Let's work together!</h3>
+                    <p>Feel free to reach out for collaborations or just a friendly hello</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+                <p>© 2025 Rashmitha Devadiga. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        // Mobile menu functionality
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenu.addEventListener('click', function () {
+            this.classList.toggle('toggle');
+            navLinks.classList.toggle('nav-active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('toggle');
+                navLinks.classList.remove('nav-active');
+            });
+        });
+
+        // Advanced cursor functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const cursor = document.querySelector('.cursor');
+
+            // Move cursor with mouse
+            document.addEventListener('mousemove', function (e) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Add hover effect on interactive elements
+            const hoverElements = document.querySelectorAll('button, a, input, textarea, select, [tabindex]');
+
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.classList.remove('cursor-default');
+                    cursor.classList.add('cursor-hover');
+                });
+
+                element.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('cursor-hover');
+                    cursor.classList.add('cursor-default');
+                });
+
+                element.addEventListener('mousedown', () => {
+                    cursor.classList.remove('cursor-hover');
+                    cursor.classList.add('cursor-click');
+                });
+
+                element.addEventListener('mouseup', () => {
+                    cursor.classList.remove('cursor-click');
+                    cursor.classList.add('cursor-hover');
+                });
+            });
+
+            // Hide cursor when leaving the window
+            document.addEventListener('mouseout', () => {
+                cursor.classList.add('cursor-hidden');
+            });
+
+            document.addEventListener('mouseover', () => {
+                cursor.classList.remove('cursor-hidden');
+            });
+        });
+
+        // Create floating particles in the hero section
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                gsap.set(particle, {
+                    x: gsap.utils.random(0, window.innerWidth),
+                    y: gsap.utils.random(0, window.innerHeight),
+                    scale: gsap.utils.random(0.5, 2)
+                });
+                
+                particlesContainer.appendChild(particle);
+                
+                // Animate particles
+                gsap.to(particle, {
+                    y: `+=${gsap.utils.random(50, 200)}`,
+                    x: `+=${gsap.utils.random(-50, 50)}`,
+                    opacity: gsap.utils.random(0.1, 0.5),
+                    duration: gsap.utils.random(3, 6),
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+            }
+        }
+
+        // Create floating shapes in the background
+        function createFloatingShapes() {
+            const shapesContainer = document.querySelector('.floating-shapes');
+            const shapeCount = 15;
+            const shapes = ['circle', 'square', 'triangle'];
+            
+            for (let i = 0; i < shapeCount; i++) {
+                const shape = document.createElement('div');
+                shape.classList.add('shape');
+                
+                // Random shape properties
+                const size = gsap.utils.random(20, 100);
+                const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                gsap.set(shape, {
+                    width: size,
+                    height: size,
+                    x: gsap.utils.random(0, window.innerWidth),
+                    y: gsap.utils.random(0, window.innerHeight),
+                    rotation: gsap.utils.random(0, 360),
+                    borderRadius: shapeType === 'circle' ? '50%' : '0'
+                });
+                
+                if (shapeType === 'triangle') {
+                    shape.style.width = '0';
+                    shape.style.height = '0';
+                    shape.style.borderLeft = `${size/2}px solid transparent`;
+                    shape.style.borderRight = `${size/2}px solid transparent`;
+                    shape.style.borderBottom = `${size}px solid var(--primary)`;
+                    shape.style.background = 'none';
+                }
+                
+                shapesContainer.appendChild(shape);
+                
+                // Animate shapes
+                gsap.to(shape, {
+                    y: `+=${gsap.utils.random(100, 300)}`,
+                    x: `+=${gsap.utils.random(-100, 100)}`,
+                    rotation: `+=${gsap.utils.random(90, 360)}`,
+                    duration: gsap.utils.random(10, 20),
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+            }
+        }
+
+        // Advanced text animation for hero section
+        function animateHeroText() {
+            // Split text into characters for animation
+            const heroTitle = document.getElementById('hero-title');
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            const heroScrollText = document.getElementById('hero-scroll-text');
+            
+            // Animate title with character stagger
+            const titleChars = heroTitle.textContent.split('');
+            heroTitle.textContent = '';
+            titleChars.forEach(char => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.display = 'inline-block';
+                span.style.opacity = '0';
+                heroTitle.appendChild(span);
+            });
+            
+            // Animate subtitle
+            gsap.to(heroSubtitle, {
+                text: "BCA Graduate & Software Developer",
+                duration: 2,
+                delay: 0.5,
+                ease: "none"
+            });
+            
+            // Animate title characters
+            gsap.to(heroTitle.querySelectorAll('span'), {
+                opacity: 1,
+                y: 0,
+                stagger: 0.05,
+                duration: 0.5,
+                delay: 0.2,
+                ease: "back.out(1.7)"
+            });
+            
+            // Animate scroll text lines
+            const scrollLines = heroScrollText.querySelectorAll('p');
+            gsap.to(scrollLines, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.2,
+                duration: 0.8,
+                delay: 1.5,
+                ease: "power2.out"
+            });
+        }
+
+        // Advanced section animations with 3D effects
+        function setupSectionAnimations() {
+            // Animate all elements with the 'animated-text' class
+            gsap.utils.toArray('.animated-text').forEach(element => {
+                gsap.set(element, { opacity: 0, y: 50 });
+                
+                ScrollTrigger.create({
+                    trigger: element,
+                    start: "top 85%",
+                    end: "bottom 20%",
+                    onEnter: () => {
+                        gsap.to(element, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: "power2.out",
+                            overwrite: true
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(element, {
+                            opacity: 0,
+                            y: 50,
+                            duration: 0.5,
+                            ease: "power2.in",
+                            overwrite: true
+                        });
+                    }
+                });
+            });
+            
+            // Add 3D tilt effect to project and info cards
+            const cards = document.querySelectorAll('.project-card, .info-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateY = (x - centerX) / 25;
+                    const rotateX = (centerY - y) / 25;
+                    
+                    gsap.to(card, {
+                        rotationY: rotateY,
+                        rotationX: rotateX,
+                        transformPerspective: 500,
+                        duration: 0.5
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        rotationY: 0,
+                        rotationX: 0,
+                        duration: 0.5
+                    });
+                });
+            });
+        }
+
+        // Enhanced skill bars animation
+        function animateSkillBars() {
+            gsap.utils.toArray('.skill-level').forEach(bar => {
+                ScrollTrigger.create({
+                    trigger: bar,
+                    start: "top 90%",
+                    onEnter: () => {
+                        gsap.to(bar, {
+                            width: bar.getAttribute('data-width'),
+                            duration: 1.5,
+                            ease: "power2.out",
+                            overwrite: true
+                        });
+                    }
+                });
+            });
+        }
+
+        // Enhanced timeline animation
+        function animateTimeline() {
+            gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+                gsap.set(item, { opacity: 0, x: i % 2 === 0 ? -100 : 100 });
+                
+                ScrollTrigger.create({
+                    trigger: item,
+                    start: "top 85%",
+                    onEnter: () => {
+                        gsap.to(item, {
+                            opacity: 1,
+                            x: 0,
+                            duration: 0.8,
+                            ease: "power2.out",
+                            overwrite: true
+                        });
+                    }
+                });
+            });
+        }
+
+        // Initialize all animations
+        function initAnimations() {
+            createParticles();
+            createFloatingShapes();
+            animateHeroText();
+            setupSectionAnimations();
+            animateSkillBars();
+            animateTimeline();
+        }
+
+        // Wait for DOM to be fully loaded
+        window.addEventListener('DOMContentLoaded', initAnimations);
+    </script>
+</body>
+
+</html>
